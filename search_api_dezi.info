@@ -1,0 +1,11 @@
+name = Dezi search
+description = Offers an implementation of the Search API that uses a Dezi server for indexing content.
+dependencies[] = search_api
+core = 7.x
+package = Search
+
+files[] = service.inc
+files[] = dezi_connection.inc
+files[] = dezi_field.inc
+files[] = includes/dezi_httptransport.inc
+files[] = includes/spellcheck.inc
