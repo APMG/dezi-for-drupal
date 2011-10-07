@@ -7,5 +7,5 @@ package = Search
 files[] = service.inc
 files[] = dezi_connection.inc
 files[] = dezi_field.inc
-files[] = includes/dezi_httptransport.inc
-files[] = includes/spellcheck.inc
+; files[] = includes/dezi_httptransport.inc
+; files[] = includes/spellcheck.inc
