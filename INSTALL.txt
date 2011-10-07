@@ -1,0 +1,51 @@
+Prerequisite:
+- Dezi 0.1.2 or higher
+- Dezi PHP client 0.1.0 or higher
+
+Steps necessary:
+- Download Dezi PHP client
+- Setting up Dezi
+
+Download Solr PHP client
+------------------------
+
+This module uses an external PHP library for communicating with Dezi servers. Go
+to [1] and download a supported version of the client.
+
+[1] https://github.com/karpet/dezi-client-php
+
+Afterwards, unpack this archive to drupal's libraries folder, so the directory
+tree looks like this:
+
+/path/to/drupal/sites/all/libraries/
+  |- DeziClient
+     |- Dezi_Client.php
+     ...
+
+The library should then be found by the module.
+
+Setting up Dezi
+---------------
+
+In order for this module to work, you will first need to set up a Dezi server.
+Download the latest stable version of Dezi
+from [2] and unpack the archive somewhere outside of your web server's document
+tree.
+
+[2] https://github.com/karpet/Dezi
+
+Follow the Dezi documentation to configure and start your Dezi server.
+
+ % dezi &
+
+Afterwards, go to [3] in your web browser to ensure Solr is running correctly.
+
+[3] http://localhost:5000/
+
+You can then enable this module and create a new server, using the "Dezi search"
+service class. Enter the hostname, port and path corresponding to your Dezi
+server in the appropriate fields. The default values already correspond to the
+example application, so you won't have to change the values if you use that.
+If you are using HTTP Authentication to protect your Dezi server (which is vital
+for security on a production site) you also have to provide the appropriate user
+and password here.
