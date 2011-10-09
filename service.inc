@@ -232,10 +232,12 @@ class SearchApiDeziService extends SearchApiAbstractService {
    */
   protected function connect() {
     if (!$this->dezi) {
-      if (!class_exists('Apache_Dezi_Service')) {
-        throw new Exception(t('DeziPhpClient library not found! Please follow the instructions in search_api_dezi/INSTALL.txt for installing the Dezi search module.'));
+      if (!class_exists('Dezi_Client')) {
+        throw new Exception(t('Dezi_Client library not found! Please follow the instructions in search_api_dezi/INSTALL.txt for installing the Dezi search module.'));
       }
-      $this->dezi = new SearchApiDeziConnection($this->options);
+      //error_log(var_export($this->options, true));
+      $opts = array('server' => sprintf("http://%s:%s", $this->options['host'], $this->options['port']));
+      $this->dezi = new SearchApiDeziConnection($opts);
     }
   }
 

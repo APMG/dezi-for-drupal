@@ -9,7 +9,7 @@ function search_api_dezi_requirements($phase) {
     module_load_include('module', 'search_api_dezi');
     spl_autoload_register('_search_api_dezi_autoload');
     if (class_exists('Dezi_Client')) {
-      $version = trim(Dezi_Client::VERSION, '$ :A..Za..z');
+      $version = trim(Dezi_Client::$VERSION, '$ :A..Za..z');
       if ($version < 0.001000) {
         return array(
           'search_api_dezi' => array(
@@ -73,7 +73,7 @@ function search_api_dezi_requirements($phase) {
     }
 
     // Check version of the Dezi_Client library.
-    $version = trim(Dezi_Client::VERSION, '$ :A..Za..z');
+    $version = trim(Dezi_Client::$VERSION, '$ :A..Za..z');
     if ($version < 0.001000) {
       $ret['search_api_dezi_client'] = array(
         'title' => t('Dezi_Client PHP library'),
