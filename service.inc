@@ -273,10 +273,16 @@ class SearchApiDeziService extends SearchApiAbstractService {
     $ret = array();
     $index_id = $index->machine_name;
     $fields = $this->getFieldNames($index);
-
+    // Check if parent lib is loaded, as it will load Dezi_Doc for us.
+    if (!class_exists('Dezi_Client')) {
+      throw new Exception("class Dezi_Client not found -- is Dezi_Client library installed correctly?");
+    }
+    if (!class_exists('Dezi_Doc')) {
+      throw new Exception("class Dezi_Doc not found -- is Dezi_Client library installed correctly?");
+    }
     foreach ($items as $id => $item) {
       try {
-        $doc = new Apache_Dezi_Document();
+        $doc = new Dezi_Doc(); // TODO wrapper for Dezi_Doc that creates the XML content.
         $doc->setField('id', $this->createId($index_id, $id));
         $doc->setField('index_id', $index_id);
         $doc->setField('item_id', $id);
@@ -379,7 +385,7 @@ class SearchApiDeziService extends SearchApiAbstractService {
    * Add $field with field name $key to the document $doc. The format of $field
    * is the same as specified in SearchApiServiceInterface::indexItems().
    */
-  protected function addIndexField(Apache_Dezi_Document $doc, $key, $value, $type, $multi_valued = FALSE) {
+  protected function addIndexField(Dezi_Doc $doc, $key, $value, $type, $multi_valued = FALSE) {
     // Don't index empty values (i.e., when field is missing)
     if (!isset($value)) {
       return;
@@ -618,7 +624,7 @@ class SearchApiDeziService extends SearchApiAbstractService {
   /**
    * Extract results from a Dezi response.
    *
-   * @param Apache_Dezi_Response $response
+   * @param Dezi_Response $response
    *   A response object from DeziPhpClient.
    *
    * @return array
@@ -627,7 +633,7 @@ class SearchApiDeziService extends SearchApiAbstractService {
    *   - results: An array of search results, as specified by
    *     SearchApiQueryInterface::execute().
    */
-  protected function extractResults(SearchApiQueryInterface $query, Apache_Dezi_Response $response) {
+  protected function extractResults(SearchApiQueryInterface $query, Dezi_Response $response) {
     $index = $query->getIndex();
     $fields = $this->getFieldNames($index);
     $field_options = $index->options['fields'];
@@ -695,7 +701,7 @@ class SearchApiDeziService extends SearchApiAbstractService {
    * Will also use highlighted fields to replace retrieved field data, if the
    * corresponding option is set.
    */
-  protected function getExcerpt(Apache_Dezi_Response $response, $id, array &$fields, array $field_mapping) {
+  protected function getExcerpt(Dezi_Response $response, $id, array &$fields, array $field_mapping) {
     if (!isset($response->highlighting->$id)) {
       return FALSE;
     }
@@ -734,13 +740,13 @@ class SearchApiDeziService extends SearchApiAbstractService {
   /**
    * Extract facets from a Dezi response.
    *
-   * @param Apache_Dezi_Response $response
+   * @param Dezi_Response $response
    *   A response object from DeziPhpClient.
    *
    * @return array
    *   An array describing facets that apply to the current results.
    */
-  protected function extractFacets(SearchApiQueryInterface $query, Apache_Dezi_Response $response) {
+  protected function extractFacets(SearchApiQueryInterface $query, Dezi_Response $response) {
     if (isset($response->facet_counts->facet_fields)) {
       $index = $query->getIndex();
       $fields = $this->getFieldNames($index);
@@ -1037,7 +1043,7 @@ class SearchApiDeziService extends SearchApiAbstractService {
    *   Name of the handler to set.
    * @param array $call_args
    *   An associative array containing all four arguments to the
-   *   Apache_Dezi_Service::search() call ("query", "offset", "limit" and
+   *   Dezi_Service::search() call ("query", "offset", "limit" and
    *   "params") as references.
    *
    * @return boolean
@@ -1068,7 +1074,7 @@ class SearchApiDeziService extends SearchApiAbstractService {
    *
    * @param array $call_args
    *   An associative array containing all four arguments to the
-   *   Apache_Dezi_Service::search() call ("query", "offset", "limit" and
+   *   Dezi_Client->search() call ("query", "offset", "limit" and
    *   "params") as references.
    * @param SearchApiQueryInterface $query
    *   The SearchApiQueryInterface object representing the executed search query.
@@ -1085,10 +1091,10 @@ class SearchApiDeziService extends SearchApiAbstractService {
    *   The results array that will be returned for the search.
    * @param SearchApiQueryInterface $query
    *   The SearchApiQueryInterface object representing the executed search query.
-   * @param Apache_Dezi_Response $response
+   * @param Dezi_Response $response
    *   The response object returned by Dezi.
    */
-  protected function postQuery(array &$results, SearchApiQueryInterface $query, Apache_Dezi_Response $response) {
+  protected function postQuery(array &$results, SearchApiQueryInterface $query, Dezi_Response $response) {
   }
 
   //
