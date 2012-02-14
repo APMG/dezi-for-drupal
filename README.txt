@@ -46,8 +46,8 @@ classic preprocessing tasks.
 Also, due to the way Dezi works, using a single field for fulltext searching
 will result in the smallest index size and best search performance, as well as
 possibly having other advantages, too. Therefore, if you don't need to search
-different sets of fields in different searches on an index, it is adviced that
-you simply set all fields that should be searched to type "Fulltext" (but don't
+different sets of fields in different searches on an index, 
+simply set all fields that should be searched to type "Fulltext" (but don't
 check "Indexed"), add the "Fulltext field" data alter callback and only index
 the newly added field named "Fulltext".
 
