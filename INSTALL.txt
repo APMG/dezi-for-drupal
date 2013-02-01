@@ -1,12 +1,12 @@
 Prerequisite:
-- Dezi 0.1.2 or higher
-- Dezi PHP client 0.1.0 or higher
+- Dezi 0.2.0 or higher
+- Dezi PHP client 0.2.0 or higher
 
 Steps necessary:
 - Download Dezi PHP client
 - Setting up Dezi
 
-Download Solr PHP client
+Download Dezi PHP client
 ------------------------
 
 This module uses an external PHP library for communicating with Dezi servers. Go
@@ -38,7 +38,7 @@ Follow the Dezi documentation to configure and start your Dezi server.
 
  % dezi &
 
-Afterwards, go to [3] in your web browser to ensure Solr is running correctly.
+Afterwards, go to [3] in your web browser to ensure Dezi is running correctly.
 
 [3] http://localhost:5000/
 
